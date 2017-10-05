@@ -47,7 +47,7 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
     ListView list;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    String username, password, iduser, selectedVehicle, selectedService, dateFinal, SelectedHour, idService;
+    String username, password, iduser, selectedVehicle, selectedService, dateFinal, SelectedHour, SidService, SidVehicle;
     Button btnDate, btnHour, btnconfirm;
     EditText etxtDate, etxtHour;
     int year, month, day, hour, minutes;
@@ -59,7 +59,9 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
 
 
     ArrayList<String> Vehicles = new ArrayList<String>();
+    ArrayList<String> idVehicle = new ArrayList<String>();
     ArrayList<String> Service = new ArrayList<String>();
+    ArrayList<String> idService = new ArrayList<String>();
     ArrayList<String> Hours = new ArrayList<String>();
     Ip ip = new Ip();
     String url2 = ip.stIp() + "/service";
@@ -105,24 +107,21 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
                             public void onResponse(String response) {
                                 // response
 
-                                String[] data = new String[4];
-                                data[0] = selectedService;
-                                data[1] = selectedVehicle;
+                                String[] data = new String[3];
+                                data[0] = SidService;
+                                data[1] = SidVehicle;
                                 data[2] = dateFinal;
-                                data[3] = idService;
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Tag", "Service:" + selectedService + "\n Vehicle:" + selectedVehicle + "\n dateFinal: " +dateFinal );
-                        parseVolleyError(error);
                     }
                 }) {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("service", selectedService);
-                        params.put("vehicle", selectedVehicle);
+                        params.put("service", SidService);
+                        params.put("vehicle", SidVehicle);
                         params.put("date", dateFinal);
                         return params;
                     }
@@ -156,19 +155,25 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
 
             @Override
             public void onResponse(JSONObject response) {
+                int tempPosition;
                 try {
                     JSONArray data = (JSONArray) response.get("data");
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][2] = datas.getString("registration");
-                        Vehicles.add(name[i][2]);
+                        name[i][0] = datas.getString("registration");
+                        name[i][1] = datas.getString("idVehicle");
+                        Vehicles.add(name[i][0]);
+                        idVehicle.add(name[i][1]);
+
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
                     Spinner spinnerVehicles = (Spinner) findViewById(R.id.spn_Vehicle);
                     spinnerVehicles.setAdapter(adapter);
                     selectedVehicle = spinnerVehicles.getSelectedItem().toString();
+                    tempPosition=spinnerVehicles.getSelectedItemPosition();
+                    SidVehicle=(name[0][1]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -203,20 +208,25 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    int tempPosition;
                     JSONArray data = (JSONArray) response.get("data");
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
                         name[i][0] = datas.getString("nameService");
-                        name[i][1] = datas.get("");
+                        name[i][1] = datas.getString("idService");
 
                         Service.add(name[i][0]);
+                        idService.add(name[i][1]);
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Service);
                     Spinner spinnerService = (Spinner) findViewById(R.id.spn_Service);
                     spinnerService.setAdapter(adapter);
-                    selectedService = spinnerService.getSelectedItem().toString();
+                    tempPosition=spinnerService.getSelectedItemPosition();
+                    SidService=(name[tempPosition][1]);
+                    Log.d("Tag", "Serviço: "+SidService);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -297,19 +307,6 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
             if (data != null) {
                 String value = data.getStringExtra("param");
             }
-        }
-    }
-
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            JSONArray errors = data.getJSONArray("errors");
-            JSONObject jsonMessage = errors.getJSONObject(0);
-            String message = jsonMessage.getString("message");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
         }
     }
 }

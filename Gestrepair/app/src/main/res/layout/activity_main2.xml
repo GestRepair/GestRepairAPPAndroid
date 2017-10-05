@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back">
+
+    <FrameLayout
+        android:layout_width="290dp"
+        android:layout_height="89dp"
+        android:background="@color/black"
+        android:alpha="0.85"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:id="@+id/frameLayout3"
+        android:layout_marginEnd="8dp">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="82dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GestRepair"
+            android:textSize="40dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="18dp"/>
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollyear"
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_weight="1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/rltv_Services"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:alpha="0.85"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnServices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/services"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Serviços"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltv_ListVehicles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:alpha="0.85"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnVehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/listvehicle"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Listar Veículos"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rltv_ListSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnSchedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/listschedule"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Ver Agendamentos"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltv_SetSchedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnSetSchedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/setschedule"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Agendar Serviços"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rltv_ListRepairs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnRepairs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/listrepairs"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Ver Reparações"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltv_Budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/budget"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Ver orçamentos"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rltv_About"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/about"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Sobre"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltv_Exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:alpha="0.85"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/black">
+
+                    <ImageButton
+                        android:id="@+id/btnExit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="30dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.85"
+                        android:background="@color/colorPrimary"
+                        android:maxHeight="120dp"
+                        android:maxWidth="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/exit"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview70"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="Sair"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:background="@color/black"
+        android:alpha="0.80"
+        android:id="@+id/frameLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3">
+
+        <TextView
+            android:id="@+id/txtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView"
+            android:textColor="@color/colorAccent"
+            android:textSize="30dp" />
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

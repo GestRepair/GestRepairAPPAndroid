@@ -1,19 +1,24 @@
 # GestRepairAndroidAPP
 ## API
-The API can be found [here](https://github.com/barcelosrui/gestRepairapi)
+The API can be found [here](https://github.com/GestRepair/GestRepairAPI)
 
-## Frontend Desktop Java
-The Frontend JAVA can be found [here](https://github.com/barcelosrui/GestRepairFrontendJava)
+## BackOffice
+The BackOffice can be found [here](https://github.com/GestRepair/GestRepairBackOffice)
 
-## Frontend Web Angular
-The Frontend JAVA can be found [here](https://github.com/barcelosrui/GestRepairFrontendAngular)
+## Web
+The Web can be found [here](https://github.com/GestRepair/GestRepairWEB)
 
 ## Database
-The Frontend JAVA can be found [here](https://github.com/barcelosrui/gestRepairdb)
+The Frontend JAVA can be found [here](https://github.com/GestRepair/GestRepairDB)
 
 ## APP Android
-The APP Android can be found [here](https://github.com/PNunesDev/GestRepairAndroidAPP)
+The APP Android can be found [here](https://github.com/GestRepair/GestRepairAPPAndroid)
+
+## Docs
+The APP Android can be found [here](https://github.com/GestRepair/GestRepairDocs)
+
+## [Download APP](https://play.google.com/store/apps/details?id=ipt.gestrepair)
 
 ## HOW TO USED
 
-API - http://ec2-52-56-143-158.eu-west-2.compute.amazonaws.com:8080
+API - http://gestrepair.ddns.net:8080

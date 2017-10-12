@@ -37,28 +37,27 @@ public class Login extends AppCompatActivity {
     AlertDialog.Builder builder;
     RequestQueue queue;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
         rq = Volley.newRequestQueue(this);
+
        /* textview = (TextView)findViewById(R.id.reg_txt);
         textview.setOnClickListener((v) {
                 startActivity(new Intent(Login.this, Register.class));
         });*/
+
         builder = new AlertDialog.Builder(Login.this);
         login_button = (Button)findViewById(R.id.bn_login);
         UserName = (EditText) findViewById(R.id.login_name);
         Password = (EditText) findViewById(R.id.login_password);
         NotRegistered = (TextView) findViewById(R.id.txt_NRegistered);
-        OFFLineMode = (TextView) findViewById(R.id.txt_offlineMode);
+        //OFFLineMode = (TextView) findViewById(R.id.txt_offlineMode);
 
         queue = Volley.newRequestQueue(this);
 
-        OFFLineMode.setOnClickListener(new View.OnClickListener() {
+        /*OFFLineMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, MainActivity2.class);
@@ -69,7 +68,7 @@ public class Login extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
-        });
+        });*/
 
         NotRegistered.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +126,6 @@ public class Login extends AppCompatActivity {
                             }
                         }
                 ) {
-
                     @Override
                     protected Map<String, String> getParams()
                     {
@@ -150,18 +148,12 @@ public class Login extends AppCompatActivity {
 
                         return super.getHeaders();
                     }
-
                 };
-
-
                 queue.add(postRequest);
-
-
             }
         });
-
-
     }
+    /*
     public void displayAlert(String message){
         builder.setMessage(message);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -173,5 +165,5 @@ public class Login extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
+    }*/
 }

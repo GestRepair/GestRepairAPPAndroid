@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ import java.util.Map;
 public class ListVehicles extends AppCompatActivity {
 
     RequestQueue rq;
-    ListView list;
+    TextView title;
     String username,password, iduser;
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
@@ -45,14 +46,12 @@ public class ListVehicles extends AppCompatActivity {
         setContentView(R.layout.activity_list_vehicles);
         rq = Volley.newRequestQueue(this);
         Intent Intent = getIntent();
-        //String Title = (TextView) findViewById()
-
+         title = (TextView) findViewById(R.id.txt_Title);
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         iduser = Intent.getStringExtra("iduser");
 
         String url = ip.stIp() + "/vehicle/"+iduser+"/user";
-        Log.i("TAG", iduser+" IP");
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -68,9 +67,8 @@ public class ListVehicles extends AppCompatActivity {
                         name[i][2] = datas.getString("registration");
                         Vehicles.add(name[i][0]+" "+name[i][1]+"\n"+name[i][2]);
                     }
-
-                    if (Vehicles==null){
-
+                    if (Vehicles.isEmpty()){
+                        title.setText("Não possui viaturas associadas");
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListVehicles.this, R.layout.activity_list_vehicles_main, Vehicles);
                     final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
@@ -79,7 +77,6 @@ public class ListVehicles extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListVehicles.this, Vehicle.class);
-                            Log.i("TAG", iduser+" IP");
                             String[] data = new String[3];
                             data[0] = username;
                             data[1] = password;
@@ -104,12 +101,6 @@ public class ListVehicles extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Context context = getApplicationContext();
-                CharSequence text = "Não foi possivel ligar à internet";
-                int duration = Toast.LENGTH_LONG;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
             }
         }){
             @Override

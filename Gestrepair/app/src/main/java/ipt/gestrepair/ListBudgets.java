@@ -32,7 +32,6 @@ import java.util.Map;
 public class ListBudgets extends AppCompatActivity {
 
     RequestQueue rq;
-    ListView list;
     String username, password, iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();

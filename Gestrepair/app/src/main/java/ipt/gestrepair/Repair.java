@@ -85,6 +85,11 @@ public class Repair extends AppCompatActivity {
                     SEntry=TM.DateTime(SEntry);
                     SOut=TM.DateTime(SOut);
 
+                    /*Verify is strings are null or empty and change them to
+                    * "Sem Dados" if true*/
+                    SPrice=isnull(SPrice);
+                    SOut=isnull(SOut);
+                    SRepairData=isnull(SRepairData);
 
                     txtRegistration.setText(SRegistration);
                     txtPrice.setText(SPrice);
@@ -138,6 +143,14 @@ public class Repair extends AppCompatActivity {
                 String value = data.getStringExtra("param");
             }
         }
+    }
+
+    public String isnull(String word){
+        Log.d("Tag", "word: "+word);
+        if (word=="null" || word==""){
+            word="Sem dados";
+        }
+        return word;
     }
 }
 

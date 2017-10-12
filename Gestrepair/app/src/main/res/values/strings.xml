@@ -33,5 +33,5 @@
     <string name="title_activity_repair">Reparações</string>
     <string name="title_activity_set_schedule_service">Agendar Serviço</string>
     <string name="title_activity_list_services">Listar Serviços</string>
-    <string name="schedule_description">O agendamento permite ao utilizador que possa fazer requisição de um agendamento este agendamento poderá ser não aprovado caso a oficina não possua disponibilidade de atendimento nas horas requisitadas pelo utilizador"</string>
+    <string name="schedule_description">O agendamento permite ao utilizador a possibilidade de requisitar um agendamento, o agendamento poderá ser não aprovado caso a disponibilidade de atendimento não possa ser cumprida nas horas e data requisitada pelo utilizador"</string>
 </resources>

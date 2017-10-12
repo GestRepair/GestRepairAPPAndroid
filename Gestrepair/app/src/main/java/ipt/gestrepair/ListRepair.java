@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +36,7 @@ public class ListRepair extends AppCompatActivity {
     ListView list;
     int n=1;
     String username, password, iduser;
+    TextView title;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
@@ -50,6 +52,7 @@ public class ListRepair extends AppCompatActivity {
         password = Intent.getStringExtra("password");
         iduser = Intent.getStringExtra("iduser");
         String url = ip.stIp() + "/repair/user/"+iduser;
+        title = (TextView) findViewById(R.id.txtTitle_LstRepair);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -62,7 +65,12 @@ public class ListRepair extends AppCompatActivity {
                         JSONObject datas = (JSONObject) data.get(i);
                         name[i][0] = datas.getString("vehicle");
                         name[i][1] = datas.getString("state");
-                        Vehicles.add("Reparação Nº "+name[i][0]+" - "+name[i][1]);
+                        name[i][2] = datas.getString("idRepair");
+                        Vehicles.add("Reparação Nº "+name[i][2]+" - "+name[i][0]+" - "+name[i][1]);
+                    }
+
+                    if(Vehicles.isEmpty()){
+                        title.setText("Não possui histórico de reparações associados à sua conta");
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListRepair.this, R.layout.activity_list_vehicles_main, Vehicles);

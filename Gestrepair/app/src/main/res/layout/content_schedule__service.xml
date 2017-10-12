@@ -24,6 +24,7 @@
             android:layout_marginBottom="8dp">
 
             <TextView
+                android:id="@+id/txt_SchSetDescriptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/schedule_description"/>
@@ -40,7 +41,7 @@
                 android:textAlignment="center"
                 android:gravity="center"
                 android:text="Escolha a viatura:"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginBottom="16dp"
                 tools:layout_editor_absoluteY="0dp"
                 tools:layout_editor_absoluteX="0dp" />
@@ -86,43 +87,80 @@
                 android:layout_height="wrap_content"
                 android:text="Escolha o dia" />
         </LinearLayout>
-        <EditText
-            android:id="@+id/etxtDate"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp">
 
-        <Button
-            android:id="@+id/btn_Hour"
+            <TextView
+                android:id="@+id/etxtDateString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Data"
+                tools:clickable="false" />
+
+            <TextView
+                android:id="@+id/etxtDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text=""
+                tools:clickable="false" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Escolha a hora" />
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp">
 
-        <EditText
+            <TextView
+                android:id="@+id/etxtHourTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Horas:" />
+
+            <Spinner
+                android:id="@+id/spn_hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/etxtHour"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
-
-        <Spinner
-            android:id="@+id/spn_hours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+            android:text="Horas:" 
+            android:visibility="invisible"/>
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/linearLayout3">
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/txtDateFinal"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -130,14 +168,13 @@
         android:layout_width="330dp"
         android:layout_height="51dp"
         android:text="Confirmar Agendamento"
+        android:clickable="false"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+        android:layout_marginBottom="8dp" />
 
     <!--
 

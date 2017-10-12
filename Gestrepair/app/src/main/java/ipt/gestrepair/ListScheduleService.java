@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +34,7 @@ import java.util.Map;
 public class ListScheduleService extends AppCompatActivity {
 
     RequestQueue rq;
-    ListView list;
+    TextView title;
     String username,password,iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
@@ -43,6 +45,7 @@ public class ListScheduleService extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_schedule);
+        title = (TextView) findViewById(R.id.txt_lstSchTitle);
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
@@ -64,7 +67,9 @@ public class ListScheduleService extends AppCompatActivity {
                         name[i][1] = datas.getString("vehicle");
                         Vehicles.add("Marcação Nº "+name[i][0] + " - " + name[i][1]);
                     }
-
+                    if(Vehicles.isEmpty()){
+                        title.setText("Não possui agendamentos");
+                    }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
                     final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
 

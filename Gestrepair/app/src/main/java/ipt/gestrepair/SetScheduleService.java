@@ -12,12 +12,14 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
@@ -43,15 +46,18 @@ import java.util.Map;
 
 public class SetScheduleService extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
     RequestQueue rq, rq2, rq3;
-    String name;
+    String [][] name;
+    String [][] nameS;
     ListView list;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String username, password, iduser, selectedVehicle, selectedService, dateFinal, SelectedHour, SidService, SidVehicle;
     Button btnDate, btnHour, btnconfirm;
-    EditText etxtDate, etxtHour;
+    TextView description;
+    TextView etxtDate, etxtHour, txtDateFinal;
     int year, month, day, hour, minutes;
     int yearfinal, monthfinal, dayfinal, hourfinal, minutesfinal;
+    Spinner spinnerService, spinnerVehicles, spinnerHours;
 
     private static final String HOUR = "hour";
     private static final String MINUTE = "minute";
@@ -75,9 +81,18 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         rq3 = Volley.newRequestQueue(this);
 
         btnDate = (Button) findViewById(R.id.btnDate);
-        btnHour = (Button) findViewById(R.id.btn_Hour);
         btnconfirm = (Button) findViewById(R.id.btn_ConfirmSchedule);
-        etxtDate = (EditText) findViewById(R.id.etxtDate);
+        etxtDate = (TextView) findViewById(R.id.etxtDate);
+        etxtHour = (TextView) findViewById(R.id.etxtHour);
+        spinnerService = (Spinner) findViewById(R.id.spn_Service);
+        spinnerVehicles = (Spinner) findViewById(R.id.spn_Vehicle);
+        spinnerHours = (Spinner) findViewById(R.id.spn_hours);
+        txtDateFinal = (TextView) findViewById(R.id.txtDateFinal);
+        description = (TextView) findViewById(R.id.txt_SchSetDescriptions);
+        btnconfirm.setEnabled(false);
+
+        spinnerHours.setActivated(false);
+        btnconfirm.setActivated(false);
 
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,15 +126,37 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
                                 data[0] = SidService;
                                 data[1] = SidVehicle;
                                 data[2] = dateFinal;
+                                Log.i("Tag", "Teste: "+SidService+ " - "+SidVehicle+" - "+dateFinal);
+
+                                Intent i = new Intent(SetScheduleService.this, MainActivity2.class);
+                                String[] datas = new String[3];
+                                datas[0] = username;
+                                datas[1] = password;
+                                datas[2] = iduser;
+                                Bundle bundle = new Bundle();
+                                i.putExtra("username", datas[0]);
+                                i.putExtra("password", datas[1]);
+                                i.putExtra("iduser", datas[2]);
+                                i.putExtras(bundle);
+
+                                Context context = getApplicationContext();
+                                CharSequence text = "Agendamento criado com sucesso";
+                                int duration = Toast.LENGTH_LONG;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+
+                                startActivityForResult(i, 2404);
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.i("Tag", "Erro"+SidService+ " - "+SidVehicle+" - "+dateFinal);
                     }
                 }) {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
+                        Log.i("Tag", "Erro"+SidService+ " - "+SidVehicle+" - "+dateFinal);
                         params.put("service", SidService);
                         params.put("vehicle", SidVehicle);
                         params.put("date", dateFinal);
@@ -150,30 +187,25 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         iduser = Intent.getStringExtra("iduser");
         String url = ip.stIp() + "/vehicle/" + iduser + "/user";
 
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                int tempPosition;
                 try {
                     JSONArray data = (JSONArray) response.get("data");
-                    String[][] name = new String[data.length()][3];
+                    name = new String[data.length()][2];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
                         name[i][0] = datas.getString("registration");
                         name[i][1] = datas.getString("idVehicle");
+
                         Vehicles.add(name[i][0]);
                         idVehicle.add(name[i][1]);
-
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
                     Spinner spinnerVehicles = (Spinner) findViewById(R.id.spn_Vehicle);
                     spinnerVehicles.setAdapter(adapter);
-                    selectedVehicle = spinnerVehicles.getSelectedItem().toString();
-                    tempPosition=spinnerVehicles.getSelectedItemPosition();
-                    SidVehicle=(name[0][1]);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -203,29 +235,27 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         rq.add(jsonObjectRequest);
 
 
+
+
         JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    int tempPosition;
+
                     JSONArray data = (JSONArray) response.get("data");
-                    String[][] name = new String[data.length()][3];
+                    nameS = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("nameService");
-                        name[i][1] = datas.getString("idService");
+                        nameS[i][0] = datas.getString("nameService");
+                        nameS[i][1] = datas.getString("idService");
 
-                        Service.add(name[i][0]);
-                        idService.add(name[i][1]);
+                        Service.add(nameS[i][0]);
+                        idService.add(nameS[i][1]);
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Service);
-                    Spinner spinnerService = (Spinner) findViewById(R.id.spn_Service);
                     spinnerService.setAdapter(adapter);
-                    tempPosition=spinnerService.getSelectedItemPosition();
-                    SidService=(name[tempPosition][1]);
-                    Log.d("Tag", "Serviço: "+SidService);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -244,9 +274,61 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         });
 
         rq2.add(jsonObjectRequest2);
+
+        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int tempPosition=spinnerService.getSelectedItemPosition();
+                Log.d("Tag", "Serviços: "+tempPosition);
+                SidService=(nameS[tempPosition][1]);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerVehicles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int tempPositionV=spinnerVehicles.getSelectedItemPosition();
+                Log.d("Tag", "Serviço Position:"+tempPositionV);
+                SidVehicle=(name[tempPositionV][1]);
+                Log.d("Tag", "Serviço: "+SidVehicle);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerHours.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SelectedHour = spinnerHours.getSelectedItem().toString();
+                etxtHour.setText(" " + SelectedHour + ":00");
+                dateFinal = etxtDate.getText().toString()+""+etxtHour.getText().toString();
+                txtDateFinal.setText(dateFinal);
+                Log.d("Tag", "Data final: " + dateFinal);
+                enablebutton();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
-
+    public void enablebutton(){
+        if(etxtHour.getText().toString()!=null && etxtDate.getText().toString()!=null)
+            btnconfirm.setEnabled(true);
+    }
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         yearfinal = year;
@@ -262,14 +344,12 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
            /* AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             Calendar calAlarm = Calendar.getInstance();
             calAlarm.add(Calendar.SECOND, 5);
-
             Intent intent = new Intent("");
             PendingIntent.getBroadcast(this, 100, new Intent(""), PendingIntent.FLAG_UPDATE_CURRENT);
-
             AlarmManager.setExact(AlarmManager.RTC_WAKEUP, calAlarm.getTimeInMillis(), );*/
         //***********************
 
-        for (int i = 10; i <= 12; i++) {
+        for (int i = 8; i <= 12; i++) {
             Hours.add(i + "");
         }
         for (int i = 14; i <= 17; i++) {
@@ -279,12 +359,11 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Hours);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //spinner.setAdapter(adapter);
-        Spinner spinnerHours = (Spinner) findViewById(R.id.spn_hours);
+
         spinnerHours.setAdapter(adapter);
         dateFinal = etxtDate.getText().toString();
-        SelectedHour = spinnerHours.getSelectedItem().toString();
-        dateFinal = etxtDate.getText().toString() + " " + SelectedHour + ":00";
-        Log.d("Tag", "Data final: " + dateFinal);
+        spinnerHours.setActivated(true);
+        enablebutton();
     }
 
     @Override
@@ -310,5 +389,3 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         }
     }
 }
-
-

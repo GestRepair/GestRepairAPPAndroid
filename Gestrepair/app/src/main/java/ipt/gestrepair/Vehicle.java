@@ -1,6 +1,8 @@
 package ipt.gestrepair;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.DrmInitData;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -77,15 +80,12 @@ public class Vehicle extends AppCompatActivity {
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = response.getJSONArray("data");
-                    Intent Intent = getIntent();
+                    final Intent Intent = getIntent();
                     int intValue = Intent.getIntExtra("position", 0);
                     Log.i("TAG", intValue+"");
 
-
-
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     final JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
-
                     SVehicleBrand = jsonObject.getString("nameBrand");
                     SVehicleModel = jsonObject.getString("nameModel");
                     SRegistration = jsonObject.getString("registration");
@@ -100,10 +100,18 @@ public class Vehicle extends AppCompatActivity {
                     DateTime TM = new DateTime();
                     SRegisterDate=TM.DateTime(SRegisterDate);
 
+                    /*Verify is strings are null or empty and change them to
+                    * "Sem Dados" if true*/
+                    SCC=isnull(SCC);
+                    SKm=isnull(SKm);
+                    SFuel=isnull(SFuel);
+                    SFrontTire=isnull(SFrontTire);
+                    SBackTire=isnull(SBackTire);
+                    //**********************************************//
+
                     txtVehicle.setText(SVehicleBrand+" - "+SVehicleModel);
                     Registration.setText(SRegistration);
                     CC.setText(SCC);
-                    //txtIdVehicle.setText(SIdVehicle);
                     Km.setText(SKm);
                     Fuel.setText(SFuel);
                     RegisterDate.setText(SRegisterDate);
@@ -113,31 +121,53 @@ public class Vehicle extends AppCompatActivity {
                     RemoveVehicle.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String url = ip.stIp() + "/vehicle/" + SIdVehicle;
-                           final String dataJ = jsonObject.toString();
+                            String url = ip.stIp() + "/vehicle/disable";
 
                             StringRequest postRequest = new StringRequest(Request.Method.PUT, url,
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             // response
-
                                             String[] data = new String[2];
                                             data[0] = iduser;
-                                            data[1] = dataJ;
+                                            data[1] = SIdVehicle;
+
+                                            Intent i = new Intent(Vehicle.this, MainActivity2.class);
+                                            String[] datas = new String[3];
+                                            datas[0] = username;
+                                            datas[1] = password;
+                                            datas[2] = iduser;
+                                            Bundle bundle = new Bundle();
+                                            i.putExtra("username", datas[0]);
+                                            i.putExtra("password", datas[1]);
+                                            i.putExtra("iduser", datas[2]);
+                                            i.putExtras(bundle);
+
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Viatura removida com sucesso";
+                                            int duration = Toast.LENGTH_LONG;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
+
+                                            startActivityForResult(i, 2404);
                                         }
                                     },
                                     new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Não foi possível remover a viatura\n Por favor tente mais tarde ou contacte administrador!";
+                                            int duration = Toast.LENGTH_LONG;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
                                         }
                                     }
                             ) {
                                 @Override
                                 protected Map<String, String> getParams() {
                                     Map<String, String> params = new HashMap<String, String>();
-                                    params.put("id", iduser);
-                                    params.put("vehicle", dataJ);
+                                    params.put("vehicle", SIdVehicle);
+                                    params.put("user", iduser);
                                     return params;
                                 }
 
@@ -196,5 +226,15 @@ public class Vehicle extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*Verify is the string sent is null or empty*/
+    /*word - variable sent to the method isnull*/
+    public String isnull(String word){
+        Log.d("Tag", "word: "+word);
+        if (word=="null" || word==""){
+            word="Sem dados";
+        }
+        return word;
     }
 }

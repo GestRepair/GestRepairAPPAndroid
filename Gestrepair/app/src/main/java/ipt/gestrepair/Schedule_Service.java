@@ -37,6 +37,7 @@ public class Schedule_Service extends AppCompatActivity {
     Button RemoveSchedule;
     boolean confirmbutton=false;
 
+
     String username,password, iduser;
 
     Ip ip = new Ip();
@@ -75,9 +76,6 @@ public class Schedule_Service extends AppCompatActivity {
                     int intValue = Intent.getIntExtra("position", 0);
                     Log.i("TAG", intValue+"");
 
-
-
-                    //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
 
                     SIDScheduleService = jsonObject.getString("idSchedule");
@@ -106,13 +104,32 @@ public class Schedule_Service extends AppCompatActivity {
 
                                                 String[] data = new String[1];
                                                 data[0] = iduser;
+
+                                                Intent i = new Intent(Schedule_Service.this, MainActivity2.class);
+                                                String[] datas = new String[3];
+                                                datas[0] = username;
+                                                datas[1] = password;
+                                                datas[2] = iduser;
+                                                Bundle bundle = new Bundle();
+                                                i.putExtra("username", datas[0]);
+                                                i.putExtra("password", datas[1]);
+                                                i.putExtra("iduser", datas[2]);
+                                                i.putExtras(bundle);
+
+                                                startActivityForResult(i, 2404);
+
+                                                Context context = getApplicationContext();
+                                                CharSequence text = "Agendamento removido com sucesso";
+                                                int duration = Toast.LENGTH_LONG;
+                                                Toast toast = Toast.makeText(context, text, duration);
+                                                toast.show();
                                             }
                                         },
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 Context context = getApplicationContext();
-                                                CharSequence text = "Error!";
+                                                CharSequence text = "Não foi possível remover o agendamento\n Por favor tente mais tarde ou contacte administrador!";
                                                 int duration = Toast.LENGTH_LONG;
                                                 Toast toast = Toast.makeText(context, text, duration);
                                                 toast.show();

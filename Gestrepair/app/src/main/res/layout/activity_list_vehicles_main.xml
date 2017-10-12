@@ -5,6 +5,6 @@
     android:fontFamily="verdana"
     android:gravity="center"
     android:padding="1dp"
-    android:textSize="20dp"
+    android:textSize="18dp"
     >
 </TextView>

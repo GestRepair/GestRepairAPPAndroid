@@ -55,6 +55,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
     ImageButton Ibt_Services, Ibt_ListVehicles, Ibt_Schedules, Ibt_SetSchedules, Ibt_Repairs, Ibt_Budgets,
             Ibt_About, Ibt_Exit;
     TextView txtMainUsr;
+    String urlSchedule;
 
     String username, password, response, iduser;
 
@@ -62,6 +63,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        rq = Volley.newRequestQueue(this);
         Ibt_Services = (ImageButton) findViewById(R.id.btnServices);
         Ibt_ListVehicles = (ImageButton) findViewById(R.id.btnVehicle);
         Ibt_Schedules = (ImageButton) findViewById(R.id.btnSchedule);
@@ -93,6 +95,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
             iduser=iduser.substring(5,10);
             iduser=iduser.replaceAll("[^\\.0123456789]","");
         }
+        urlSchedule = ip.stIp() + "/vehicle/" + iduser + "/user";
 
     }
 
@@ -110,11 +113,6 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 data[0] = username;
                 data[1] = password;
                 data[2] = iduser;
-                Context context = getApplicationContext();
-                CharSequence text = data[0]+""+data[1]+""+data[2]+"lhurz";
-                int duration = Toast.LENGTH_LONG;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
                 Bundle bundle = new Bundle();
                 i.putExtra("username", data[0]);
                 i.putExtra("password", data[1]);
@@ -136,7 +134,69 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(i, 2404);
                 break;
             case R.id.btnSetSchedule:
-                i = new Intent(MainActivity2.this, SetScheduleService.class);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlSchedule, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        int tempPosition;
+                        try {
+                            JSONArray data = (JSONArray) response.get("data");
+                            String[][] name = new String[data.length()][3];
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject datas = (JSONObject) data.get(i);
+                                name[i][0] = datas.getString("registration");
+                                Vehicles.add(name[i][0]);
+                            }
+
+                            if(Vehicles.isEmpty()){
+                                Context context = getApplicationContext();
+                                CharSequence text = "Não é possivel efetuar agendamentos sem uma viatura associada à sua conta\n Por favor contacte uma das oficinas GestRepair para adicionar a sua viatura.";
+                                int duration = Toast.LENGTH_LONG;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                            else{
+                                Intent i = new Intent(MainActivity2.this, SetScheduleService.class);
+                                String [] data2= new String[3];
+                                data2[0] = username;
+                                data2[1] = password;
+                                data2[2] = iduser;
+                                Bundle bundle = new Bundle();
+                                i.putExtra("username", data2[0]);
+                                i.putExtra("password", data2[1]);
+                                i.putExtra("iduser", data2[2]);
+                                i.putExtras(bundle);
+                                startActivityForResult(i, 2404);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Não foi possivel ligar à internet";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        String credentials = username + ":" + password;
+                        String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", "Basic " + base64EncodedCredentials);
+                        return headers;
+                    }
+                };
+                rq.add(jsonObjectRequest);
+                break;
+            case R.id.btnBudget:
+                i = new Intent(MainActivity2.this, ListBudgets.class);
                 data = new String[3];
                 data[0] = username;
                 data[1] = password;
@@ -161,25 +221,12 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 i.putExtras(bundle);
                 startActivityForResult(i, 2404);
                 break;
-            case R.id.btnBudget:
-                i = new Intent(MainActivity2.this, ListBudgets.class);
-                data = new String[3];
-                data[0] = username;
-                data[1] = password;
-                data[2] = iduser;
-                bundle = new Bundle();
-                i.putExtra("username", data[0]);
-                i.putExtra("password", data[1]);
-                i.putExtra("iduser", data[2]);
-                i.putExtras(bundle);
-                startActivityForResult(i, 2404);
-                break;
             case R.id.btnAbout:
-                /*Context context = getApplicationContext();
+                Context context = getApplicationContext();
                 CharSequence text = "A ser implementado numa versão futura";
                 int duration = Toast.LENGTH_LONG;
                 Toast toast = Toast.makeText(context, text, duration);
-                toast.show();*/
+                toast.show();
                 break;
             case R.id.btnExit:
                 i = new Intent(MainActivity2.this, Login.class);

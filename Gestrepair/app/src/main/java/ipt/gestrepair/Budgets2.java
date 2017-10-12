@@ -101,13 +101,14 @@ public class Budgets2 extends AppCompatActivity implements View.OnClickListener{
                     txtProcess.setText(TM.DateTime(SProcess));
                     txtRepair.setText(SRepair + " dias");
                     Log.i("Tag", "State: "+SState);
-                    ApproveBudget.setVisibility(View.INVISIBLE);
-                    RemoveBudget.setVisibility(View.INVISIBLE);
-                    if(SState!="Avaliação"){
+                    if(SState.equals("Avaliação")){
                         ApproveBudget.setVisibility(View.VISIBLE);
                         RemoveBudget.setVisibility(View.VISIBLE);
                     }
-
+                    else{
+                        ApproveBudget.setVisibility(View.INVISIBLE);
+                        RemoveBudget.setVisibility(View.INVISIBLE);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

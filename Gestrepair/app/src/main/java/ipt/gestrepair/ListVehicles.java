@@ -38,6 +38,7 @@ public class ListVehicles extends AppCompatActivity {
     String username,password, iduser;
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
+    String url;
 
 
     @Override
@@ -46,13 +47,19 @@ public class ListVehicles extends AppCompatActivity {
         setContentView(R.layout.activity_list_vehicles);
         rq = Volley.newRequestQueue(this);
         Intent Intent = getIntent();
-         title = (TextView) findViewById(R.id.txt_Title);
+        title = (TextView) findViewById(R.id.txt_Title);
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         iduser = Intent.getStringExtra("iduser");
 
-        String url = ip.stIp() + "/vehicle/"+iduser+"/user";
+        String url = ip.stIp() + "/vehicle/" + iduser + "/user";
+        Log.d("Tag","credentials:"+username);
+        Log.d("Tag","credentials:"+password);
+        Log.d("Tag","credentials:"+iduser);
+        callListVehicles(url);
+    }
 
+    private void callListVehicles(String url){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override

@@ -88,6 +88,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         response = Intent.getStringExtra("response");
+        iduser = Intent.getStringExtra("iduser");
         txtMainUsr.setText(username);
 
         if(response!=null) {

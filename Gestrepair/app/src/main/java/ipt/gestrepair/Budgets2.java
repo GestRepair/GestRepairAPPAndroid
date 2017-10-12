@@ -169,11 +169,24 @@ public class Budgets2 extends AppCompatActivity implements View.OnClickListener{
                                 data[0] = iduser;
                                 data[1] = "3";
 
+                                Intent i = new Intent(Budgets2.this, MainActivity2.class);
+                                String[] datas = new String[3];
+                                datas[0] = username;
+                                datas[1] = password;
+                                datas[2] = iduser;
+                                Bundle bundle = new Bundle();
+                                i.putExtra("username", datas[0]);
+                                i.putExtra("password", datas[1]);
+                                i.putExtra("iduser", datas[2]);
+                                i.putExtras(bundle);
+
                                 Context context = getApplicationContext();
-                                CharSequence text = "Budget"+ SIdBudget;
+                                CharSequence text = "Orçamento aprovado com sucesso";
                                 int duration = Toast.LENGTH_LONG;
                                 Toast toast = Toast.makeText(context, text, duration);
                                 toast.show();
+
+                                startActivityForResult(i, 2404);
                             }
                         },
                         new Response.ErrorListener() {
@@ -217,6 +230,25 @@ public class Budgets2 extends AppCompatActivity implements View.OnClickListener{
                                 String[] data = new String[2];
                                 data[0] = iduser;
                                 data[1] = "4";
+
+                                Intent i = new Intent(Budgets2.this, MainActivity2.class);
+                                String[] datas = new String[3];
+                                datas[0] = username;
+                                datas[1] = password;
+                                datas[2] = iduser;
+                                Bundle bundle = new Bundle();
+                                i.putExtra("username", datas[0]);
+                                i.putExtra("password", datas[1]);
+                                i.putExtra("iduser", datas[2]);
+                                i.putExtras(bundle);
+
+                                Context context = getApplicationContext();
+                                CharSequence text = "Orçamento reprovado com sucesso";
+                                int duration = Toast.LENGTH_LONG;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+
+                                startActivityForResult(i, 2404);
                             }
                         },
                         new Response.ErrorListener() {

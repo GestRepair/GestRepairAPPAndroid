@@ -224,7 +224,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnAbout:
                 Context context = getApplicationContext();
-                CharSequence text = "A ser implementado numa versão futura";
+                CharSequence text = "Versão: "+BuildConfig.VERSION_NAME+"\n A ser implementado numa versão futura";
                 int duration = Toast.LENGTH_LONG;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();

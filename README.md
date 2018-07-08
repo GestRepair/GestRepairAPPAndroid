@@ -1,4 +1,7 @@
 # GestRepairAndroidAPP
+
+[![codebeat badge](https://codebeat.co/badges/823995d0-dbcb-4b08-98de-d872459b3c6f)](https://codebeat.co/projects/github-com-gestrepair-gestrepairappandroid-master)
+
 ## API
 The API can be found [here](https://github.com/GestRepair/GestRepairAPI)
 
